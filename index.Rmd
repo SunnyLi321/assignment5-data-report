@@ -1,0 +1,61 @@
+---
+title: "index"
+author: "Sunny Li"
+date: "2019/11/3"
+output: html_document
+---
+
+```{r, echo=FALSE, include=FALSE, eval=TRUE}
+library(dplyr)
+library(knitr)
+source("analysis.R")
+
+```
+
+##Summary
+There are `r shooting_occurs` shooting incidents occurs in the United States in 2018. In total, `r lives_lost` lives lost in the shooting incidents. The city with most impacted, which is the city with most occurrence of shooting incidents, is `r city_impact`. The city with most killed people is `r city_most_killed`. The city with most injured people in shooting accidents is `r city_most_injured`.
+
+##Summary Table
+```{r, echo=FALSE, include=TRUE, eval=TRUE}
+source("analysis.R")
+most_injured <- table %>%
+  filter(total_num_injured == max(total_num_injured)) %>%
+  pull(city)
+most_killed <- table %>%
+  filter(total_num_killed == max(total_num_killed)) %>%
+  pull(city)
+```
+
+`r kable(table)`
+
+In the table, we can apparently see that the city with the most number of people being killed is `r most_killed`, in which I defined as the most dangerous city. And that the city with the most people being injured in 2018 is `r most_injured`. 
+
+
+
+##Description of a particular incident
+There is a car-to-car shooting event happens on `r cal_info$date`, near `r cal_info$address`, `r cal_info$city`, `r cal_info$state`. `r cal_info$num_killed` people was being killed, `r cal_info$num_injured` people was being injured, including at least two boys. According to Los Angeles Sheriff’s Department, the events happened at 9pm. There are two bystander who are also caught in the gunfire. More information can be found on https://ktla.com/2018/12/09/5-people-including-2-boys-hurt-in-car-to-car-shooting-in-inglewood-area-officials/
+
+
+##An interactive map
+`r maps`
+
+- The purpose of this interactive map is to visually compare the number of being killed and number of being injured for each cities. For the cities with more people being killed and injured in shooting incidents, the map will displays as bigger circles, and vice versa. <br>
+<br>
+Insights<br>
+- Firstly, I observe that most of the incidents happens eastern side of the United States.
+- Secondly, I observe that the murder incidents in Western United States happens most in Los Angeles.
+
+
+##A plot of your choice
+Question: How do cities with top 10 most shooting murders compared with each other? 
+```{r, echo=FALSE, include=TRUE, eval=TRUE}
+source("analysis.R")
+library(ggplot2)
+pie
+```
+
+- Why I choose pie charts?<br>
+Because I want to know the propotion of the top ten cities with most shooting murders, pie chart is the best chart to express proportionality. Each cities is distinguished with different colors, and we can easily view how each city taken up the propotion of pie chart. <br>
+- Two insights<br>
+First, with the top 10 shooting murder cities, they distribute evenly compared with each other with no outliers. <br>
+Second, top 10 cities are mostly well-developed cities like Chicago, Los Angeles, Orlando, etc.<br>
